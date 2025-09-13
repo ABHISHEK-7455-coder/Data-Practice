@@ -1,0 +1,20 @@
+.Container {
+    border: 2px solid black;
+    padding: 20px;
+    width: 90%;
+    margin: auto;
+}
+
+.songs-container {
+    display: flex;
+    gap: 50px 20px;
+    flex-wrap: wrap;
+    border: 2px solid black;
+    padding: 15px;
+}
+
+.songs-card {
+    border: 1px solid black;
+    padding: 10px;
+    width: 150px;
+}
