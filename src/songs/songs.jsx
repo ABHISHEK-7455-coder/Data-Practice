@@ -74,16 +74,25 @@ const playlists = [
 
 
 export default function Songs() {
-const [selectedArtistId, setSelectedArtistId] = useState(1);
-const [selectedArtist, setSelectedArtist] = useState(1);
-  const filterSongsByArtist = (artistId) => {
-          return songs.filter(song => song.artistsId === artistId);
-       };
-       const filteredSongs = filterSongsByArtist(selectedArtistId);
-       const filterSongsByPlaylist = (artist) => {
-          return songs.filter(song => song.artist === artist);
-       };
-       const filteredSongsByPlaylist = filterSongsByPlaylist(selectedArtist);
+    const [selectedArtistId, setSelectedArtistId] = useState(1);
+    const [selectedPlayListId, setSelectedPlayListId] = useState(1);
+
+    const filterSongsByArtist = (artistId) => {
+        return songs.filter(song => song.artistsId === artistId);
+    };
+    const filteredSongs = filterSongsByArtist(selectedArtistId);
+
+
+    const filterPlaylist = (playlistid) => {
+        return playlists.find(playlist => playlist.id === playlistid);
+    };
+    const filteredSongsByPlaylist = filterPlaylist(selectedPlayListId);
+    const songsInPlaylist = songs.filter(song =>
+        filteredSongsByPlaylist?.songIds?.includes(song.id)
+    );
+   console.log("songs that in playlis", songsInPlaylist);
+
+
     return (
         <div className="Container">
             <div style={{ display: 'flex', justifyContent: "space-around" }}>
@@ -96,10 +105,22 @@ const [selectedArtist, setSelectedArtist] = useState(1);
                     </select>
                 </div>
                 {filteredSongs.map(song => (
-        <div key={song.id}>
-          {song.title} 
-        </div>
-      ))}
+                    <div key={song.id}>
+                        {song.title}
+                    </div>
+                ))}
+                <select value={selectedPlayListId} onChange={(e) => setSelectedPlayListId(Number(e.target.value))}>
+                    {playlists.map(playlist => (
+                        <option key={playlist.id} value={playlist.id}>
+                            {playlist.name}
+                        </option>
+                    ))}
+                </select>
+                {songsInPlaylist.map(song => (
+                    <div key={song.id}>
+                        {song.title}
+                    </div>
+                ))}
             </div>
 
             <div className="songs-container">
@@ -128,18 +149,19 @@ const filterSongs = songs.filter(song => {
 console.log("filtered songs by artist", filterSongs);
 
 // 1. Filter songs by Artist A (artistId: 1)
+
+// 2. Get all songs in the "Workout" playlist
 const workOutPlaylist = playlists.find(playlist => (
     playlist.name === "Workout"
 ))
-console.log(workOutPlaylist)
-// 2. Get all songs in the "Workout" playlist
-
+console.log("WorkOut Playlist", workOutPlaylist)
 // 3. List all song titles longer than 3 minutes
 // 4. Group songs by artist name
 // 5. Total play time of all songs in "My Favorites" playlist
 
 const totalDuration = workOutPlaylist.songIds.reduce((runningTotal, currentSongId) => {
     const currentSong = songs.find(song => song.id === currentSongId);
-    return runningTotal += currentSong.duration
+    const numericDuration = parseInt(currentSong.duration, 10)
+    return runningTotal += numericDuration
 }, 0)
-console.log(totalDuration)
+console.log("Total duration",totalDuration)
