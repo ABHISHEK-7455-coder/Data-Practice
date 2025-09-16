@@ -96,7 +96,7 @@ export default function Songs() {
     return (
         <div className="Container">
             <div style={{ display: 'flex', justifyContent: "space-around" }}>
-                <h2>Songs</h2>
+                <h2>SONGS</h2>
                 <div>
                     <select value={selectedArtistId} onChange={(e) => setSelectedArtistId(Number(e.target.value))}>
                         {artists.map((artist) => (
