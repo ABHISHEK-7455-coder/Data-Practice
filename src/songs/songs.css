@@ -7,7 +7,7 @@
 
 .songs-container {
     display: flex;
-    gap: 50px 20px;
+    gap: 50px 19px;
     flex-wrap: wrap;
     border: 2px solid black;
     padding: 15px;
